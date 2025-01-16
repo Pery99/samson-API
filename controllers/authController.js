@@ -74,11 +74,6 @@ const login = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {
-  res.clearCookie("token");
-  res.json({ message: "Logged out successfully" });
-};
-
 const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password").lean();
@@ -87,7 +82,6 @@ const getUser = async (req, res) => {
     }
     res.json({
       ...user,
-      points: user.points || 0, // Ensure points are included
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
